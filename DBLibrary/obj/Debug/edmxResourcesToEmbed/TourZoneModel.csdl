@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TourZoneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AccountType">
+    <Key>
+      <PropertyRef Name="AccountTypeId" />
+    </Key>
+    <Property Name="AccountTypeId" Type="Int32" Nullable="false" />
+    <Property Name="AccountTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="UserAccounts" Relationship="Self.FK_UserAccount_AccountType" FromRole="AccountType" ToRole="UserAccount" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CompanySizeId" Type="Int32" />
+    <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="YearFormed" Type="DateTime" Precision="0" />
+    <Property Name="CompanyPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CountryCodeId" Type="Int32" />
+    <Property Name="CompanyEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="CompanySize" Relationship="Self.FK_Company_CompanySize" FromRole="Company" ToRole="CompanySize" />
+    <NavigationProperty Name="CountryCode" Relationship="Self.FK_Company_CountryCode" FromRole="Company" ToRole="CountryCode" />
+    <NavigationProperty Name="CompanyUserAccounts" Relationship="Self.FK_CompanyUserAccount_Company" FromRole="Company" ToRole="CompanyUserAccount" />
+    <NavigationProperty Name="Jobs" Relationship="TourZoneModel.FK_Job_Company" FromRole="Company" ToRole="Job" />
+  </EntityType>
+  <EntityType Name="CompanySize">
+    <Key>
+      <PropertyRef Name="CompanySizeId" />
+    </Key>
+    <Property Name="CompanySizeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanySize1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Companies" Relationship="Self.FK_Company_CompanySize" FromRole="CompanySize" ToRole="Company" />
+  </EntityType>
+  <EntityType Name="CompanyUserAccount">
+    <Key>
+      <PropertyRef Name="CompanyUserAccountId" />
+    </Key>
+    <Property Name="CompanyUserAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int32" />
+    <Property Name="UserAccountId" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Company" Relationship="Self.FK_CompanyUserAccount_Company" FromRole="CompanyUserAccount" ToRole="Company" />
+    <NavigationProperty Name="UserAccount" Relationship="Self.FK_CompanyUserAccount_UserAccount" FromRole="CompanyUserAccount" ToRole="UserAccount" />
+  </EntityType>
+  <EntityType Name="CountryCode">
+    <Key>
+      <PropertyRef Name="CountryCodeId" />
+    </Key>
+    <Property Name="CountryCodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryCode1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Companies" Relationship="Self.FK_Company_CountryCode" FromRole="CountryCode" ToRole="Company" />
+    <NavigationProperty Name="UserAccounts" Relationship="Self.FK_UserAccount_CountryCode" FromRole="CountryCode" ToRole="UserAccount" />
+  </EntityType>
+  <EntityType Name="Job">
+    <Key>
+      <PropertyRef Name="JobId" />
+    </Key>
+    <Property Name="JobId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="JobCategoryId" Type="Int32" />
+    <Property Name="TourLength" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="JobCategory" Relationship="Self.FK_Job_JobCategory" FromRole="Job" ToRole="JobCategory" />
+    <NavigationProperty Name="JobApplicants" Relationship="Self.FK_JobApplicant_Job" FromRole="Job" ToRole="JobApplicant" />
+    <Property Name="CompanyId" Type="Int32" />
+    <NavigationProperty Name="Company" Relationship="TourZoneModel.FK_Job_Company" FromRole="Job" ToRole="Company" />
+  </EntityType>
+  <EntityType Name="JobApplicant">
+    <Key>
+      <PropertyRef Name="JobApplicantId" />
+    </Key>
+    <Property Name="JobApplicantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobSeekerId" Type="Int32" />
+    <Property Name="JobId" Type="Int32" />
+    <Property Name="AppliedForJob" Type="Boolean" />
+    <NavigationProperty Name="Job" Relationship="Self.FK_JobApplicant_Job" FromRole="JobApplicant" ToRole="Job" />
+    <NavigationProperty Name="JobSeeker" Relationship="Self.FK_JobApplicant_JobSeeker" FromRole="JobApplicant" ToRole="JobSeeker" />
+  </EntityType>
+  <EntityType Name="JobCategory">
+    <Key>
+      <PropertyRef Name="JobCategoryId" />
+    </Key>
+    <Property Name="JobCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobCategory1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Jobs" Relationship="Self.FK_Job_JobCategory" FromRole="JobCategory" ToRole="Job" />
+  </EntityType>
+  <EntityType Name="JobSeeker">
+    <Key>
+      <PropertyRef Name="JobSeekerId" />
+    </Key>
+    <Property Name="JobSeekerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserAccountId" Type="Int32" />
+    <Property Name="JobTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ExperienceLevelId" Type="Int32" />
+    <Property Name="SeekingWork" Type="Boolean" />
+    <Property Name="AvailableNow" Type="Boolean" />
+    <Property Name="Bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="JobApplicants" Relationship="Self.FK_JobApplicant_JobSeeker" FromRole="JobSeeker" ToRole="JobApplicant" />
+    <NavigationProperty Name="UserAccount" Relationship="Self.FK_JobSeeker_UserAccount" FromRole="JobSeeker" ToRole="UserAccount" />
+    <NavigationProperty Name="ExperienceLevel" Relationship="TourZoneModel.FK_JobSeeker_ExperienceLevel" FromRole="JobSeeker" ToRole="ExperienceLevel" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserAccount">
+    <Key>
+      <PropertyRef Name="UserAccountId" />
+    </Key>
+    <Property Name="UserAccountId" Type="Int32" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Forename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+    <Property Name="AccountTypeId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CountryCodeId" Type="Int32" />
+    <NavigationProperty Name="AccountType" Relationship="Self.FK_UserAccount_AccountType" FromRole="UserAccount" ToRole="AccountType" />
+    <NavigationProperty Name="CompanyUserAccounts" Relationship="Self.FK_CompanyUserAccount_UserAccount" FromRole="UserAccount" ToRole="CompanyUserAccount" />
+    <NavigationProperty Name="CountryCode" Relationship="Self.FK_UserAccount_CountryCode" FromRole="UserAccount" ToRole="CountryCode" />
+    <NavigationProperty Name="JobSeekers" Relationship="Self.FK_JobSeeker_UserAccount" FromRole="UserAccount" ToRole="JobSeeker" />
+  </EntityType>
+  <Association Name="FK_UserAccount_AccountType">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+    <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="AccountTypeId" />
+      </Principal>
+      <Dependent Role="UserAccount">
+        <PropertyRef Name="AccountTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_CompanySize">
+    <End Role="CompanySize" Type="Self.CompanySize" Multiplicity="0..1" />
+    <End Role="Company" Type="Self.Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CompanySize">
+        <PropertyRef Name="CompanySizeId" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="CompanySizeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_CountryCode">
+    <End Role="CountryCode" Type="Self.CountryCode" Multiplicity="0..1" />
+    <End Role="Company" Type="Self.Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryCode">
+        <PropertyRef Name="CountryCodeId" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="CountryCodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompanyUserAccount_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="CompanyUserAccount" Type="Self.CompanyUserAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="CompanyUserAccount">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompanyUserAccount_UserAccount">
+    <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+    <End Role="CompanyUserAccount" Type="Self.CompanyUserAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserAccount">
+        <PropertyRef Name="UserAccountId" />
+      </Principal>
+      <Dependent Role="CompanyUserAccount">
+        <PropertyRef Name="UserAccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserAccount_CountryCode">
+    <End Role="CountryCode" Type="Self.CountryCode" Multiplicity="0..1" />
+    <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryCode">
+        <PropertyRef Name="CountryCodeId" />
+      </Principal>
+      <Dependent Role="UserAccount">
+        <PropertyRef Name="CountryCodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Job_JobCategory">
+    <End Role="JobCategory" Type="Self.JobCategory" Multiplicity="0..1" />
+    <End Role="Job" Type="Self.Job" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobCategory">
+        <PropertyRef Name="JobCategoryId" />
+      </Principal>
+      <Dependent Role="Job">
+        <PropertyRef Name="JobCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobApplicant_Job">
+    <End Role="Job" Type="Self.Job" Multiplicity="0..1" />
+    <End Role="JobApplicant" Type="Self.JobApplicant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Job">
+        <PropertyRef Name="JobId" />
+      </Principal>
+      <Dependent Role="JobApplicant">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobApplicant_JobSeeker">
+    <End Role="JobSeeker" Type="Self.JobSeeker" Multiplicity="0..1" />
+    <End Role="JobApplicant" Type="Self.JobApplicant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobSeeker">
+        <PropertyRef Name="JobSeekerId" />
+      </Principal>
+      <Dependent Role="JobApplicant">
+        <PropertyRef Name="JobSeekerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobSeeker_UserAccount">
+    <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+    <End Role="JobSeeker" Type="Self.JobSeeker" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserAccount">
+        <PropertyRef Name="UserAccountId" />
+      </Principal>
+      <Dependent Role="JobSeeker">
+        <PropertyRef Name="UserAccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TourZone_DevEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AccountTypes" EntityType="Self.AccountType" />
+    <EntitySet Name="Companies" EntityType="Self.Company" />
+    <EntitySet Name="CompanySizes" EntityType="Self.CompanySize" />
+    <EntitySet Name="CompanyUserAccounts" EntityType="Self.CompanyUserAccount" />
+    <EntitySet Name="CountryCodes" EntityType="Self.CountryCode" />
+    <EntitySet Name="Jobs" EntityType="Self.Job" />
+    <EntitySet Name="JobApplicants" EntityType="Self.JobApplicant" />
+    <EntitySet Name="JobCategories" EntityType="Self.JobCategory" />
+    <EntitySet Name="JobSeekers" EntityType="Self.JobSeeker" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
+    <AssociationSet Name="FK_UserAccount_AccountType" Association="Self.FK_UserAccount_AccountType">
+      <End Role="AccountType" EntitySet="AccountTypes" />
+      <End Role="UserAccount" EntitySet="UserAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_CompanySize" Association="Self.FK_Company_CompanySize">
+      <End Role="CompanySize" EntitySet="CompanySizes" />
+      <End Role="Company" EntitySet="Companies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_CountryCode" Association="Self.FK_Company_CountryCode">
+      <End Role="CountryCode" EntitySet="CountryCodes" />
+      <End Role="Company" EntitySet="Companies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompanyUserAccount_Company" Association="Self.FK_CompanyUserAccount_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="CompanyUserAccount" EntitySet="CompanyUserAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompanyUserAccount_UserAccount" Association="Self.FK_CompanyUserAccount_UserAccount">
+      <End Role="UserAccount" EntitySet="UserAccounts" />
+      <End Role="CompanyUserAccount" EntitySet="CompanyUserAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserAccount_CountryCode" Association="Self.FK_UserAccount_CountryCode">
+      <End Role="CountryCode" EntitySet="CountryCodes" />
+      <End Role="UserAccount" EntitySet="UserAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Job_JobCategory" Association="Self.FK_Job_JobCategory">
+      <End Role="JobCategory" EntitySet="JobCategories" />
+      <End Role="Job" EntitySet="Jobs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobApplicant_Job" Association="Self.FK_JobApplicant_Job">
+      <End Role="Job" EntitySet="Jobs" />
+      <End Role="JobApplicant" EntitySet="JobApplicants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobApplicant_JobSeeker" Association="Self.FK_JobApplicant_JobSeeker">
+      <End Role="JobSeeker" EntitySet="JobSeekers" />
+      <End Role="JobApplicant" EntitySet="JobApplicants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobSeeker_UserAccount" Association="Self.FK_JobSeeker_UserAccount">
+      <End Role="UserAccount" EntitySet="UserAccounts" />
+      <End Role="JobSeeker" EntitySet="JobSeekers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Job_Company" Association="TourZoneModel.FK_Job_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Job" EntitySet="Jobs" />
+    </AssociationSet>
+    <EntitySet Name="ExperienceLevels" EntityType="TourZoneModel.ExperienceLevel" />
+    <AssociationSet Name="FK_JobSeeker_ExperienceLevel" Association="TourZoneModel.FK_JobSeeker_ExperienceLevel">
+      <End Role="ExperienceLevel" EntitySet="ExperienceLevels" />
+      <End Role="JobSeeker" EntitySet="JobSeekers" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Job_Company">
+    <End Type="TourZoneModel.Company" Role="Company" Multiplicity="0..1" />
+    <End Type="TourZoneModel.Job" Role="Job" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Job">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ExperienceLevel">
+    <Key>
+      <PropertyRef Name="ExperienceLevelId" />
+    </Key>
+    <Property Name="ExperienceLevelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExperienceLevel1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="JobSeekers" Relationship="TourZoneModel.FK_JobSeeker_ExperienceLevel" FromRole="ExperienceLevel" ToRole="JobSeeker" />
+  </EntityType>
+  <Association Name="FK_JobSeeker_ExperienceLevel">
+    <End Type="TourZoneModel.ExperienceLevel" Role="ExperienceLevel" Multiplicity="0..1" />
+    <End Type="TourZoneModel.JobSeeker" Role="JobSeeker" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExperienceLevel">
+        <PropertyRef Name="ExperienceLevelId" />
+      </Principal>
+      <Dependent Role="JobSeeker">
+        <PropertyRef Name="ExperienceLevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

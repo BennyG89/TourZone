@@ -1,0 +1,12 @@
+C:\Users\benny\source\repos\TourZone\DBLibrary\bin\Debug\DBLibrary.dll.config
+C:\Users\benny\source\repos\TourZone\DBLibrary\bin\Debug\DBLibrary.dll
+C:\Users\benny\source\repos\TourZone\DBLibrary\bin\Debug\DBLibrary.pdb
+C:\Users\benny\source\repos\TourZone\DBLibrary\bin\Debug\EntityFramework.dll
+C:\Users\benny\source\repos\TourZone\DBLibrary\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\benny\source\repos\TourZone\DBLibrary\bin\Debug\EntityFramework.xml
+C:\Users\benny\source\repos\TourZone\DBLibrary\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\benny\source\repos\TourZone\DBLibrary\obj\Debug\DBLibrary.csprojAssemblyReference.cache
+C:\Users\benny\source\repos\TourZone\DBLibrary\obj\Debug\DBLibrary.csproj.CoreCompileInputs.cache
+C:\Users\benny\source\repos\TourZone\DBLibrary\obj\Debug\DBLibrary.csproj.CopyComplete
+C:\Users\benny\source\repos\TourZone\DBLibrary\obj\Debug\DBLibrary.dll
+C:\Users\benny\source\repos\TourZone\DBLibrary\obj\Debug\DBLibrary.pdb
